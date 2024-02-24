@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://dyvgxfwhfisk4"]
+
+[ext_resource type="Texture2D" uid="uid://613sv62wntq0" path="res://images/purple.png" id="1_8o5hi"]
+[ext_resource type="Script" path="res://level.gd" id="1_i6i4l"]
+[ext_resource type="PackedScene" uid="uid://bxx2852facm57" path="res://player.tscn" id="2_dg6da"]
+[ext_resource type="PackedScene" uid="uid://cmex0txiey2ki" path="res://maze.tscn" id="3_57xei"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4yxkq"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_yq0on"]
+font_size = 24
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_i6i4l")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Background" type="TextureRect" parent="CanvasLayer"]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_8o5hi")
+stretch_mode = 1
+
+[node name="Maze" parent="." instance=ExtResource("3_57xei")]
+position = Vector2(481, 345)
+
+[node name="End_Label" type="Label" parent="."]
+offset_left = 330.0
+offset_top = -878.0
+offset_right = 396.0
+offset_bottom = -833.0
+text = "END"
+label_settings = SubResource("LabelSettings_4yxkq")
+
+[node name="Start_Label" type="Label" parent="."]
+offset_left = 526.0
+offset_top = 265.0
+offset_right = 621.0
+offset_bottom = 310.0
+text = "START"
+label_settings = SubResource("LabelSettings_4yxkq")
+
+[node name="Rules_Label" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 51.0
+offset_right = 676.0
+offset_bottom = 196.0
+text = "Rules:
+- Use arrow keys or WASD to move
+- Go from the Start to End
+- You will go back to the Start if you go outside the maze!"
+label_settings = SubResource("LabelSettings_yq0on")
+
+[node name="Player" parent="." instance=ExtResource("2_dg6da")]
+position = Vector2(572, 391)
+
+[connection signal="body_exited" from="Maze" to="." method="_on_maze_body_exited"]
